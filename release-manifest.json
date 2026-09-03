@@ -1,0 +1,79 @@
+{
+  "protocol": 1,
+  "repository": "SLtowl/graphite-dashboard-design",
+  "version": "1.1.0",
+  "files": {
+    ".gitattributes": {
+      "sha256": "fc11962be33201914116ccd89f8e706df4996f6f23626912a4564e98600fe8e4",
+      "size": 45
+    },
+    ".gitignore": {
+      "sha256": "ef5cc39173d31a0f513cf6892f45384671a2ca9a57bd6c18a24eeac6e6caff10",
+      "size": 146
+    },
+    "LICENSE": {
+      "sha256": "977b3bfd09b0bcd9b80f3a1bd0317b01ad44f6d81e47d27a39182a64b6cc086d",
+      "size": 1095
+    },
+    "README.md": {
+      "sha256": "61124ee7a17635606d528fe08d1990fac148306891fbc49b6caec96081cff94e",
+      "size": 4943
+    },
+    "SKILL.md": {
+      "sha256": "8801d84663366654889f82822b529fed8ceca4f7f5fa2b6a66235e92fc6967c2",
+      "size": 10200
+    },
+    "agents/openai.yaml": {
+      "sha256": "e19b13101825f1fb880f9c288a8d1ea30feeaf5d9c2c088cab574a013e869f55",
+      "size": 278
+    },
+    "assets/fonts/OFL.txt": {
+      "sha256": "bc29b497c4e8316b2d248322a9cea670c2f0afc24ae0eb7bbaa54e02e00eebab",
+      "size": 4402
+    },
+    "assets/fonts/instrument-sans-variable.woff2": {
+      "sha256": "aa72922aafcc0dc18f36ec1d805b0212057dabe8b9d5b8b57f67035aea1b826d",
+      "size": 88784
+    },
+    "assets/graphite.css": {
+      "sha256": "83d0a402ef048d52a438616bafc181669233b1129af2a5a732ad051ee3c52dd8",
+      "size": 8569
+    },
+    "assets/readme-surfaces.png": {
+      "sha256": "ad3c3f55cda578fe6b1a20732427c6612246d267cca8eee083e0c1010ae6f5b8",
+      "size": 1265839
+    },
+    "assets/readme-typography.png": {
+      "sha256": "1875a84e48eff1130f8db6ff42703947b6962b51686e63cac8da71aae7d7cce0",
+      "size": 1020420
+    },
+    "cover.png": {
+      "sha256": "a16ef9a32396d101c4838017f340dc8093c843c28a1e1a1a6c203e6926d339f1",
+      "size": 1217489
+    },
+    "examples/index.html": {
+      "sha256": "f04898f248d20640e405d543789b04ccc2d70af6127e7397a4ff1fb75071aae4",
+      "size": 6991
+    },
+    "preview.png": {
+      "sha256": "4c3f475cc15a64823cbe670649c9bbb30d213bd361ddff204e160eab68d23e57",
+      "size": 294965
+    },
+    "references/components.md": {
+      "sha256": "80c19cb9fa37cf1c2c69dc0ab134a803100f679d05cd7d84d7ccf75b9f430333",
+      "size": 6612
+    },
+    "references/updates.md": {
+      "sha256": "5eae0784c883a46747fb1cd378d2c8ffd7d3aa2e3755b4ba775024025cbe2611",
+      "size": 4521
+    },
+    "scripts/update.mjs": {
+      "sha256": "43ae4c995ede63bb4b86b9de3552d6017ed32a617e885e2f7f8f79e3bfab30bf",
+      "size": 13436
+    },
+    "tests/update.test.mjs": {
+      "sha256": "a121e5b2401df9867979bac7cc1f027be0ab61efd427da37c9d56fc4c8e2e661",
+      "size": 8671
+    }
+  }
+}

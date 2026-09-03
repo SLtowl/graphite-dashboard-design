@@ -8,6 +8,8 @@ Group related metrics on one surface. Place the label above its value. Spacing o
 
 If a value gets longer, widen the cell or change its formatting. Do not shrink just one number. Abbreviations such as "M" are acceptable when the exact value and unit remain available.
 
+The provided strip uses wrapping flex items and a shared one-pixel gap for dividers. Do not add left borders to every item: they become incorrect when an item starts a new row. Test a narrow container on a wide viewport. Very long exact values can scroll inside the value element; keep that region keyboard-focusable or provide a readable full-value alternative. Do not rely only on the absence of page-level horizontal scrolling.
+
 Use 22-28 px for a primary KPI and 17-20 px for a supporting top-strip value. A weight around 540 gives numbers presence without making them heavy.
 
 ## Chart panel
@@ -21,6 +23,8 @@ A small chart without axes can supplement an exact value, but should not be the 
 Bars start at zero. A line chart may use a restricted range if the scale is clear and does not exaggerate the change. Charts being compared must not silently switch scales.
 
 Do not stretch an SVG independently along both axes just to fill space: this changes stroke widths and point shapes. Adapt the `viewBox` and plot area to the container.
+
+The example redraws coordinates with ResizeObserver and uses a viewBox width equal to the displayed width. Labels remain 12 screen pixels; fewer date ticks are shown in narrow panels. Keep an accessible description or value list when reducing labels.
 
 ## Table
 
@@ -59,6 +63,20 @@ A button label states a clear action. Its fill is slightly lighter than the pane
 For grouped switches, show selection through fill and text. If using an underline, place it below the text baseline. Do not strike through the active language.
 
 Unavailable actions need a real `disabled` state or appropriate logic, not just a grayer color. Hover states do not replace keyboard focus.
+
+Test both anchors and native buttons with `.gd-button`; they should have the same typography. `.gd-selectable` includes hover, selected, and disabled appearance. A disabled selected item must not retain the active glow. CSS does not implement selection logic or prevent an `aria-disabled` link from navigating.
+
+## Form fields
+
+Wrap a field in a label with `.gd-field`, or connect a separate label using `for` and `id`. Add `.gd-input` to input, select, or textarea. Plain unclassed controls are not a complete styled form. Textareas inherit the same font and can resize vertically.
+
+For an invalid value, set `aria-invalid="true"` and link a visible `.gd-field-error` explanation with `aria-describedby`. A light border alone does not communicate the error. Disabled fields use native `disabled`; keep read-only and disabled behavior distinct.
+
+## Surface tokens and isolation
+
+Panel fills use `--gd-surface` with `--gd-raised` for the top layer. Fields use `--gd-recess`. Set these values on `.gd-theme` to adapt surfaces consistently. Add `.gd-glass` to a panel only where backdrop blur has useful content behind it; the default panel keeps an opaque fallback.
+
+Component rules apply to descendants of `.gd-theme`. Use a theme wrapper around components, not a component class on the theme root itself. The font-face declaration is necessarily document-wide.
 
 ## Empty, loading, and error states
 

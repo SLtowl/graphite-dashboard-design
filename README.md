@@ -18,7 +18,7 @@ The layout depends on the task. Use the skill for tables, monitoring, analytics,
 
 ## Installation
 
-Download the repository and place its contents in:
+Download the source archive from the [latest release](https://github.com/SLtowl/graphite-dashboard-design/releases/latest) and place its contents in:
 
 ```text
 ~/.codex/skills/graphite-dashboard-design/
@@ -41,6 +41,29 @@ Change the styling, but preserve the structure, data, and behavior.
 ```
 
 Other agents may use a different installation path or invocation syntax. They need to support `SKILL.md` and its linked files.
+
+## Automatic updates
+
+Updates are off by default. To opt in, run this command from the installed skill folder:
+
+```sh
+node scripts/update.mjs enable
+```
+
+Node.js 20 or newer is required only for the updater, not for the CSS or demo. When an agent follows the skill's instructions, it runs a local update check at the start of a task. After opt-in, the updater checks the latest stable GitHub release at most once per 24 hours and installs compatible updates. There is no background service, scheduler, or automatic execution when you merely open the demo.
+
+Local edits stop the update. The previous version is backed up. Changes to the updater itself, the managed file list, or the major version require a manual upgrade. Existing dashboards are never updated by this process.
+
+```sh
+node scripts/update.mjs status
+node scripts/update.mjs check
+node scripts/update.mjs disable
+node scripts/update.mjs rollback
+```
+
+The updater downloads only from this repository and does not run downloaded code. File hashes detect corruption, not a compromised maintainer account. Enabling updates means trusting future compatible skill instructions from this repository. GitHub receives normal connection metadata; no project files or credentials are uploaded. Git checkouts use manual updates.
+
+See [update behavior and recovery](references/updates.md) for details. If your agent cannot run local commands, check or update manually.
 
 ## Example and source files
 
@@ -65,7 +88,9 @@ You can use the CSS on its own. Copy `assets`, including the fonts folder, link 
 </main>
 ```
 
-Theme tokens are scoped to the container. Component classes use the `gd-` prefix.
+Theme tokens and component styles are scoped to descendants of the container. Component classes use the `gd-` prefix. The font-face declaration is document-wide.
+
+The metric strip wraps within its container. Extremely long values remain available through a scrollable value region; keep it keyboard-focusable as in the example. Use `.gd-input` for labeled form fields. `.gd-glass` enables optional backdrop blur on a panel.
 
 ## Fonts
 

@@ -12,7 +12,7 @@
     h1 { margin: 6px 0 8px; font-size: 28px; font-weight: 540; letter-spacing: -.025em; }
     .demo-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, 1fr); gap: 16px; margin-top: 16px; }
     .demo-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-    .demo-chart { display: block; width: 100%; height: auto; margin-top: 20px; }
+    .demo-chart { display: block; width: 100%; height: 216px; margin-top: 20px; }
     .demo-chart text { fill: var(--gd-muted); font-family: var(--gd-font); font-size: 12px; }
     .demo-options { display: grid; gap: 12px; margin-top: 20px; }
     .demo-options button { display: grid; gap: 6px; text-align: left; cursor: pointer; font-family: var(--gd-font); }
@@ -20,7 +20,7 @@
     .demo-table { margin-top: 16px; }
     footer.gd-caption { margin-top: 20px; }
     @media (max-width: 850px) { .demo-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 600px) { body { padding: 12px; } main { padding: 16px; } header { align-items: flex-start; flex-direction: column; } h1 { font-size: 24px; } .demo-chart text { font-size: 20px; } }
+    @media (max-width: 600px) { body { padding: 12px; } main { padding: 16px; } header { align-items: flex-start; flex-direction: column; } h1 { font-size: 24px; } }
   </style>
 </head>
 <body class="gd-theme">
@@ -35,9 +35,9 @@
     </header>
 
     <dl class="gd-metrics">
-      <div class="gd-metric"><dt>Requests</dt><dd>24,860</dd><small>Total over 7 days</small></div>
-      <div class="gd-metric"><dt>p95 latency</dt><dd>128 ms</dd><small>Latest day</small></div>
-      <div class="gd-metric"><dt>Active services</dt><dd>12 / 12</dd><small>All services available</small></div>
+      <div class="gd-metric"><dt>Requests</dt><dd tabindex="0">24,860</dd><small>Total over 7 days</small></div>
+      <div class="gd-metric"><dt>p95 latency</dt><dd tabindex="0">128 ms</dd><small>Latest day</small></div>
+      <div class="gd-metric"><dt>Active services</dt><dd tabindex="0">12 / 12</dd><small>All services available</small></div>
     </dl>
 
     <div class="demo-grid">
@@ -77,6 +77,26 @@
     <footer class="gd-caption">These are component samples, not a required dashboard layout.</footer>
   </main>
   <script>
+    const chart = document.querySelector('.demo-chart');
+    const values = [150, 145, 139, 142, 130, 124, 128];
+    function drawChart() {
+      const width = chart.clientWidth, height = 216;
+      if (width < 1) return;
+      chart.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      const left = 38, right = width - 12;
+      const x = i => left + i * (right - left) / 6;
+      const y = value => 148 - (value - 120) * 3;
+      const ticks = width < 340 ? [0, 2, 4, 6] : [0, 1, 2, 3, 4, 5, 6];
+      chart.innerHTML = `<title id="chart-title">Latency over seven days</title><desc id="chart-desc">May 12: 150 ms; 13: 145; 14: 139; 15: 142; 16: 130; 17: 124; 18: 128. Target: at most 140 ms. Synthetic values.</desc>
+        ${[120, 140, 160].map(value => `<path class="gd-chart-grid" d="M${left} ${y(value)}H${right}"/><text x="0" y="${y(value)+4}">${value}</text>`).join('')}
+        <path class="gd-chart-target" d="M${left} ${y(140)}H${right}"/>
+        <text x="${right}" y="${y(140)-10}" text-anchor="end">Target ≤ 140</text>
+        <polyline class="gd-chart-line" points="${values.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}"/>
+        <circle cx="${x(6)}" cy="${y(values[6])}" r="4" fill="#f7fbff"/>
+        ${ticks.map(i=>`<text x="${x(i)}" y="184" text-anchor="middle">${12+i}</text>`).join('')}`;
+    }
+    new ResizeObserver(drawChart).observe(chart);
+    drawChart();
     const options = [...document.querySelectorAll('.demo-options button')];
     options.forEach(button => button.addEventListener('click', () => {
       options.forEach(option => {

@@ -11,6 +11,10 @@ This skill defines a visual language, not a single layout. A dashboard may conta
 
 ## Getting started
 
+For an installed release, check for updates at the start of a task if Node.js 20 or newer is already available: run `node "<skill-directory>/scripts/update.mjs" auto` using the actual location of this skill, not the project directory. Without saved opt-in, this command must remain local and do nothing. Do not install Node, enable updates, schedule jobs, or bypass network permissions automatically. If Node is unavailable, continue with the installed version.
+
+Before enabling or managing updates, read [references/updates.md](references/updates.md). If an update succeeds, reread this file and the resources needed for the task before implementation. If the updater reports a conflict, failure, or manual upgrade requirement, report it and keep the current version; do not force replacement or retry in a loop. An incomplete update requires recovery before using the skill. Update consent covers this skill only, never generated projects.
+
 Inspect the available data and what the user needs to do on the screen. Identify the main object of attention and the next action. For a new product, choose a reasonable structure based on the request. Do not require approval of a separate specification unless the user asks for one.
 
 When updating an interface, preserve working flows, data, and the chosen stack. Change only what the request covers. This style does not require a component library, image generator, ESLint, or a new build system.
@@ -84,6 +88,8 @@ Enable `font-variant-numeric: tabular-nums` for numbers. Use slightly negative l
 
 Do not fix a cramped card by using 9 px text. Adjust width, grouping, or wording first. Keep values and their units from wrapping apart accidentally.
 
+The metric strip wraps according to its container and content. Keep that behavior when integrating it. If an exact value is wider than the entire available area, provide a keyboard-focusable scroll region (`tabindex="0"` on the value in the example) or an accessible compact representation with the full value available. Check individual value bounds, not only page overflow.
+
 Format numbers for the interface locale. Decimal separators, grouping, currencies, and dates should be consistent. Do not hardcode Russian-formatted values into an English interface.
 
 ## Content-driven layout
@@ -114,6 +120,8 @@ Use one family of outline icons, usually 16-20 px with a stroke around 1.5 px. D
 
 Icon-only buttons need accessible names. Do not remove every visible map control for a cleaner screenshot. Gestures and shortcuts supplement controls rather than replace the only accessible way to act.
 
+Use `.gd-input` for text fields, selects, and textareas, with a real label. Use a native `disabled` attribute where supported. `aria-disabled` only changes semantics and appearance: the application must block activation itself. Pair `aria-invalid` with a visible explanation linked by `aria-describedby`.
+
 ## Checks before delivery
 
 Inspect the interface in a browser with real data or a clearly labeled demo. If a browser is unavailable, say so instead of claiming visual verification.
@@ -124,6 +132,7 @@ Check that:
 - The primary action and selected object stand out without lighting up the entire screen.
 - Russian and English strings fit without clipping or unintended wrapping.
 - Metrics remain readable with long numbers and browser zoom.
+- Resize narrow panels inside wide pages as well as the page itself. Check around layout breakpoints, including 600/601 px and 1024 px. Chart labels should retain their intended screen-pixel size; a fixed SVG font size alone does not guarantee that.
 - The font actually loads. Check Cyrillic and currency symbols separately.
 - Text contrast is sufficient: aim for 4.5:1 for normal text and 3:1 for large text. Check the final surface, including transparency.
 - Meaningful lines and control states remain visible. Keyboard interaction and visible focus work.
