@@ -1,0 +1,156 @@
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("./fonts/instrument-sans-variable.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* All tokens are scoped to the theme container. */
+.gd-theme {
+  --gd-page: #020303;
+  --gd-shell: #060707;
+  --gd-recess: #08090a;
+  --gd-surface: #101214;
+  --gd-raised: rgba(25, 29, 31, .82);
+  --gd-active: rgba(34, 38, 41, .82);
+  --gd-text: #f3f5f6;
+  --gd-secondary: #b7bdc1;
+  --gd-muted: #929a9f;
+  --gd-line: rgba(231, 239, 244, .18);
+  --gd-line-soft: rgba(231, 239, 244, .09);
+  --gd-selected: #f7fbff;
+  --gd-radius-control: 10px;
+  --gd-radius-panel: 18px;
+  --gd-radius-shell: 22px;
+  --gd-space-1: 4px;
+  --gd-space-2: 8px;
+  --gd-space-3: 12px;
+  --gd-space-4: 16px;
+  --gd-space-5: 20px;
+  --gd-space-6: 24px;
+  --gd-space-8: 32px;
+  --gd-font: "Instrument Sans", "Segoe UI", sans-serif;
+  color: var(--gd-text);
+  background: var(--gd-page);
+  font-family: var(--gd-font);
+  font-size: 14px;
+  line-height: 1.45;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  color-scheme: dark;
+}
+
+.gd-theme *, .gd-theme *::before, .gd-theme *::after { box-sizing: border-box; }
+.gd-theme button, .gd-theme input, .gd-theme select { font: inherit; }
+.gd-theme :focus-visible { outline: 2px solid var(--gd-selected); outline-offset: 3px; }
+.gd-theme .gd-secondary { color: var(--gd-secondary); }
+.gd-theme .gd-muted { color: var(--gd-muted); }
+.gd-theme .gd-number { font-variant-numeric: tabular-nums; letter-spacing: -.025em; }
+
+.gd-shell {
+  min-width: 0;
+  border: 1px solid rgba(242, 247, 250, .12);
+  border-radius: var(--gd-radius-shell);
+  background: var(--gd-shell);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, .5), inset 0 1px rgba(255, 255, 255, .035);
+}
+
+.gd-panel {
+  min-width: 0;
+  padding: var(--gd-space-6);
+  border: 1px solid var(--gd-line-soft);
+  border-radius: var(--gd-radius-panel);
+  background: linear-gradient(145deg, #15181a, #0a0c0d 72%);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .045), 0 18px 40px rgba(0, 0, 0, .24);
+}
+
+/* The opaque surface above remains the fallback. */
+@supports (backdrop-filter: blur(1px)) {
+  .gd-panel {
+    background: linear-gradient(145deg, rgba(21, 24, 26, .94), rgba(10, 12, 13, .97) 72%);
+    backdrop-filter: blur(16px);
+  }
+}
+
+.gd-panel-title { margin: 0; font-size: 18px; line-height: 1.3; font-weight: 540; letter-spacing: -.025em; }
+.gd-caption { margin: 0; color: var(--gd-muted); font-size: 12px; line-height: 1.4; }
+.gd-kicker { margin: 0; color: var(--gd-secondary); font-size: 11px; font-weight: 540; line-height: 1.4; letter-spacing: .055em; text-transform: uppercase; }
+
+.gd-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  margin: 0;
+  border: 1px solid var(--gd-line-soft);
+  border-radius: 13px;
+  background: linear-gradient(135deg, rgba(27, 31, 33, .64), rgba(12, 14, 15, .76));
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035);
+}
+.gd-metric { min-width: 0; padding: 16px 20px; }
+.gd-metric + .gd-metric { border-left: 1px solid var(--gd-line-soft); }
+.gd-metric dt { margin: 0; color: var(--gd-secondary); font-size: 12px; }
+.gd-metric dd { margin: 6px 0 0; font-size: 24px; font-weight: 540; line-height: 1.2; font-variant-numeric: tabular-nums; letter-spacing: -.025em; }
+.gd-metric small { display: block; margin-top: 8px; color: var(--gd-muted); font-size: 11px; }
+
+.gd-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  max-width: 100%;
+  padding: 8px 16px;
+  border: 1px solid rgba(239, 247, 250, .26);
+  border-radius: var(--gd-radius-control);
+  background: rgba(238, 246, 250, .075);
+  color: var(--gd-text);
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .055);
+  transition: background 140ms ease, border-color 140ms ease;
+}
+.gd-button:hover { background: rgba(238, 246, 250, .12); border-color: rgba(247, 251, 255, .44); }
+.gd-button:active { background: rgba(238, 246, 250, .16); }
+.gd-button:disabled { opacity: .5; cursor: not-allowed; }
+.gd-button:disabled:hover { background: rgba(238, 246, 250, .075); border-color: rgba(239, 247, 250, .26); }
+.gd-button svg { width: 18px; height: 18px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.gd-selectable {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--gd-line);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .065), rgba(255, 255, 255, .018));
+  color: var(--gd-secondary);
+}
+.gd-selectable[aria-pressed="true"], .gd-selected {
+  border-color: rgba(247, 251, 255, .76);
+  color: var(--gd-text);
+  background: var(--gd-active);
+  box-shadow: 0 0 0 1px rgba(247, 251, 255, .06), 0 0 20px rgba(225, 239, 248, .07);
+}
+
+.gd-table-wrap { overflow-x: auto; min-width: 0; }
+.gd-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+.gd-table th { padding: 12px 16px; color: var(--gd-muted); font-size: 11px; font-weight: 500; }
+.gd-table td { height: 48px; padding: 12px 16px; border-top: 1px solid var(--gd-line-soft); }
+.gd-table .gd-number { text-align: right; }
+.gd-table tbody tr:hover { background: rgba(255, 255, 255, .025); }
+.gd-table caption { padding: 0 16px 12px; text-align: left; color: var(--gd-secondary); font-size: 12px; }
+
+.gd-chart-line { fill: none; stroke: #c8d1d6; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.gd-chart-grid { stroke: var(--gd-line-soft); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.gd-chart-target { stroke: #929a9f; stroke-width: 1; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; }
+.gd-chart-selected { stroke: var(--gd-selected); filter: drop-shadow(0 0 4px rgba(224, 238, 245, .22)); }
+
+@media (pointer: coarse) { .gd-button { min-height: 44px; } }
+@media (max-width: 600px) {
+  .gd-panel { padding: 16px; }
+  .gd-metrics { grid-template-columns: 1fr; }
+  .gd-metric + .gd-metric { border-left: 0; border-top: 1px solid var(--gd-line-soft); }
+}
+@media (prefers-reduced-motion: reduce) { .gd-theme .gd-button { transition: none; } }

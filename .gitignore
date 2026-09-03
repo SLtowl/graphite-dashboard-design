@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+desktop.ini
+.env
+.env.*
+*.log
+*.zip
+node_modules/
+.vercel/
+.idea/
+.vscode/
+playwright-report/
+test-results/

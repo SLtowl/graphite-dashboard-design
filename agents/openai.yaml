@@ -1,0 +1,4 @@
+interface:
+  display_name: "Graphite Dashboard Design"
+  short_description: "Graphite dashboards, glass surfaces, and clear typography"
+  default_prompt: "Use $graphite-dashboard-design to style a dashboard with black and graphite surfaces, readable data, and restrained glow."

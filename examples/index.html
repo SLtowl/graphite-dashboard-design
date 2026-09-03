@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Graphite Dashboard Design | Style sample</title>
+  <link rel="stylesheet" href="../assets/graphite.css">
+  <style>
+    body { margin: 0; padding: 32px; }
+    main { max-width: 1120px; margin: auto; padding: 28px; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 24px; }
+    h1 { margin: 6px 0 8px; font-size: 28px; font-weight: 540; letter-spacing: -.025em; }
+    .demo-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, 1fr); gap: 16px; margin-top: 16px; }
+    .demo-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+    .demo-chart { display: block; width: 100%; height: auto; margin-top: 20px; }
+    .demo-chart text { fill: var(--gd-muted); font-family: var(--gd-font); font-size: 12px; }
+    .demo-options { display: grid; gap: 12px; margin-top: 20px; }
+    .demo-options button { display: grid; gap: 6px; text-align: left; cursor: pointer; font-family: var(--gd-font); }
+    .demo-options strong { font-size: 15px; font-weight: 540; }
+    .demo-table { margin-top: 16px; }
+    footer.gd-caption { margin-top: 20px; }
+    @media (max-width: 850px) { .demo-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { body { padding: 12px; } main { padding: 16px; } header { align-items: flex-start; flex-direction: column; } h1 { font-size: 24px; } .demo-chart text { font-size: 20px; } }
+  </style>
+</head>
+<body class="gd-theme">
+  <main class="gd-shell">
+    <header>
+      <div>
+        <p class="gd-kicker">Graphite Dashboard Design</p>
+        <h1>System overview</h1>
+        <p class="gd-caption">Style sample. All data is synthetic.</p>
+      </div>
+      <a class="gd-button" href="../SKILL.md">Read the skill</a>
+    </header>
+
+    <dl class="gd-metrics">
+      <div class="gd-metric"><dt>Requests</dt><dd>24,860</dd><small>Total over 7 days</small></div>
+      <div class="gd-metric"><dt>p95 latency</dt><dd>128 ms</dd><small>Latest day</small></div>
+      <div class="gd-metric"><dt>Active services</dt><dd>12 / 12</dd><small>All services available</small></div>
+    </dl>
+
+    <div class="demo-grid">
+      <section class="gd-panel" aria-labelledby="chart-heading">
+        <div class="demo-heading"><h2 class="gd-panel-title" id="chart-heading">p95 latency</h2><span class="gd-caption">May 12-18 · ms</span></div>
+        <svg class="demo-chart" viewBox="0 0 520 216" role="img" aria-labelledby="chart-title chart-desc">
+          <title id="chart-title">Latency over seven days</title>
+          <desc id="chart-desc">May 12: 150 ms; 13: 145; 14: 139; 15: 142; 16: 130; 17: 124; 18: 128. Target: at most 140 ms. Synthetic values.</desc>
+          <g class="gd-chart-grid"><path d="M44 28H490 M44 88H490 M44 148H490"/></g>
+          <path class="gd-chart-target" d="M44 88H490"/>
+          <text x="0" y="32">160</text><text x="0" y="92">140</text><text x="0" y="152">120</text>
+          <text x="342" y="78">Target ≤ 140</text>
+          <polyline class="gd-chart-line" points="44,58 118,73 192,91 266,82 340,118 414,136 488,124"/>
+          <circle cx="488" cy="124" r="4" fill="#f7fbff"/>
+          <g text-anchor="middle"><text x="44" y="184">12</text><text x="118" y="184">13</text><text x="192" y="184">14</text><text x="266" y="184">15</text><text x="340" y="184">16</text><text x="414" y="184">17</text><text x="488" y="184">18</text></g>
+        </svg>
+      </section>
+      <section class="gd-panel" aria-labelledby="selection-heading">
+        <h2 class="gd-panel-title" id="selection-heading">Selection state</h2>
+        <p class="gd-caption" style="margin-top:8px">Click an item to compare states.</p>
+        <div class="demo-options" role="group" aria-label="Selection samples">
+          <button class="gd-selectable" type="button" aria-pressed="true"><strong>Core service</strong><span class="gd-caption">Selected item</span></button>
+          <button class="gd-selectable" type="button" aria-pressed="false"><strong>Background worker</strong><span class="gd-caption">Default item</span></button>
+        </div>
+      </section>
+    </div>
+
+    <section class="gd-panel demo-table" aria-label="Table sample">
+      <div class="gd-table-wrap" tabindex="0" role="region" aria-label="Horizontally scrollable service table">
+        <table class="gd-table">
+          <caption>Two of twelve services. Remaining requests: 6,260.</caption>
+          <thead><tr><th scope="col">Service</th><th scope="col">Status</th><th scope="col" class="gd-number">Requests</th><th scope="col" class="gd-number">p95, ms</th></tr></thead>
+          <tbody><tr><td>Core service</td><td>Available</td><td class="gd-number">12,400</td><td class="gd-number">128</td></tr><tr><td>Background worker</td><td>Available</td><td class="gd-number">6,200</td><td class="gd-number">96</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    <footer class="gd-caption">These are component samples, not a required dashboard layout.</footer>
+  </main>
+  <script>
+    const options = [...document.querySelectorAll('.demo-options button')];
+    options.forEach(button => button.addEventListener('click', () => {
+      options.forEach(option => {
+        const selected = option === button;
+        option.setAttribute('aria-pressed', String(selected));
+        option.querySelector('.gd-caption').textContent = selected ? 'Selected item' : 'Default item';
+      });
+    }));
+  </script>
+</body>
+</html>
