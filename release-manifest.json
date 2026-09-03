@@ -1,7 +1,7 @@
 {
   "protocol": 1,
   "repository": "SLtowl/graphite-dashboard-design",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "files": {
     ".gitattributes": {
       "sha256": "fc11962be33201914116ccd89f8e706df4996f6f23626912a4564e98600fe8e4",
@@ -16,12 +16,12 @@
       "size": 1095
     },
     "README.md": {
-      "sha256": "61124ee7a17635606d528fe08d1990fac148306891fbc49b6caec96081cff94e",
-      "size": 4943
+      "sha256": "b4cf5af3110969655766f856bf1a3b83febd32ce88596392cb76fa7838f829d4",
+      "size": 7160
     },
     "SKILL.md": {
-      "sha256": "8801d84663366654889f82822b529fed8ceca4f7f5fa2b6a66235e92fc6967c2",
-      "size": 10200
+      "sha256": "425561b9a56680e979f4a6799ae88366586ff1922406a72b1474c027310ed221",
+      "size": 15186
     },
     "agents/openai.yaml": {
       "sha256": "e19b13101825f1fb880f9c288a8d1ea30feeaf5d9c2c088cab574a013e869f55",
@@ -36,8 +36,8 @@
       "size": 88784
     },
     "assets/graphite.css": {
-      "sha256": "83d0a402ef048d52a438616bafc181669233b1129af2a5a732ad051ee3c52dd8",
-      "size": 8569
+      "sha256": "beae26019be83e8437325f0be85c7c799329041b7230999783ae5f0aa4c46ca0",
+      "size": 16594
     },
     "assets/readme-surfaces.png": {
       "sha256": "ad3c3f55cda578fe6b1a20732427c6612246d267cca8eee083e0c1010ae6f5b8",
@@ -52,24 +52,64 @@
       "size": 1217489
     },
     "examples/index.html": {
-      "sha256": "f04898f248d20640e405d543789b04ccc2d70af6127e7397a4ff1fb75071aae4",
-      "size": 6991
+      "sha256": "7983c16ea853260c363f710541f8ff0513f5fc096d5dea88c8add2e0127c0912",
+      "size": 8608
+    },
+    "examples/states.css": {
+      "sha256": "c10c1d61187cb4ff2acbf5084db46e5e8a9c963bd2c37dd9b515cb4c3d94dad8",
+      "size": 5132
+    },
+    "examples/states.html": {
+      "sha256": "bf1b5693c74154d3985d93a157b9499cc32b880e3b689864615a693104f7022e",
+      "size": 11067
+    },
+    "examples/states.js": {
+      "sha256": "f22e04fd89b71724ee753d9ac8aebd2ff51161f6bc4966266084d60e31e099ba",
+      "size": 7838
+    },
+    "package-lock.json": {
+      "sha256": "5d7b3ff1562d6b4b48fa608f904aba4605a2e634f2f16b338b57bb318d19c53f",
+      "size": 1810
+    },
+    "package.json": {
+      "sha256": "80e8738c2d43b0eecbc69aae0173015a8b0339406c4b593e5f27a5f28b71cc6a",
+      "size": 535
     },
     "preview.png": {
-      "sha256": "4c3f475cc15a64823cbe670649c9bbb30d213bd361ddff204e160eab68d23e57",
-      "size": 294965
+      "sha256": "341fb721538388389185d402c1db0ba33ff8bbaeb45ca885d9d9025996288359",
+      "size": 306886
+    },
+    "references/audit.md": {
+      "sha256": "59f882a1e87372ef42a0bb49c4c676467d6a2e15af712d4e6f49c65314588525",
+      "size": 2420
     },
     "references/components.md": {
-      "sha256": "80c19cb9fa37cf1c2c69dc0ab134a803100f679d05cd7d84d7ccf75b9f430333",
-      "size": 6612
+      "sha256": "7ca2e1cae864df922b30434633eef60c8b60548800c956f98597d841908c2fc0",
+      "size": 15499
+    },
+    "references/team-use.md": {
+      "sha256": "56d35f6a56236bb9f9983aa60f396febfb912e72fc9930823352f827f3a95c15",
+      "size": 3126
+    },
+    "references/testing.md": {
+      "sha256": "42d0722e1deddccb3ccdc173d8190834d63ce16d3ed98b5152f92abc43f7f27d",
+      "size": 5173
     },
     "references/updates.md": {
-      "sha256": "5eae0784c883a46747fb1cd378d2c8ffd7d3aa2e3755b4ba775024025cbe2611",
-      "size": 4521
+      "sha256": "a95cc02aa9c836563045c5e14cb3391755b63b838d552cf4c649925754a96dde",
+      "size": 4845
+    },
+    "scripts/check-package.mjs": {
+      "sha256": "b792c30c3d44888a4e638d8ad90b2e1bc740a913f3bd7af98af2ad9044ab61ff",
+      "size": 3412
     },
     "scripts/update.mjs": {
-      "sha256": "43ae4c995ede63bb4b86b9de3552d6017ed32a617e885e2f7f8f79e3bfab30bf",
-      "size": 13436
+      "sha256": "f627746c57e566b7067c9d7d3c7dd7837f6a0b9f97e55800d48d6b7fe6af71a6",
+      "size": 13703
+    },
+    "tests/ui.test.mjs": {
+      "sha256": "ec9cb207b9ca3ebda43e38167d24ae65bde3541065b542635cf61897a4381ad7",
+      "size": 24822
     },
     "tests/update.test.mjs": {
       "sha256": "a121e5b2401df9867979bac7cc1f027be0ab61efd427da37c9d56fc4c8e2e661",

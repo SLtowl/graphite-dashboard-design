@@ -1,6 +1,6 @@
 ---
 name: graphite-dashboard-design
-description: Create or restyle dashboards with layered black and graphite surfaces, restrained glow, and clear numeric typography. Use for analytics, admin panels, and work interfaces when this visual style is requested. Do not replace an established brand with a dark theme without a request.
+description: Create, restyle, or audit dashboards with layered black and graphite surfaces, restrained glow, and clear numeric typography. Use for analytics, admin panels, and work interfaces when this visual style is requested. Do not replace an established brand with a dark theme without a request.
 ---
 
 # Graphite Dashboard Design
@@ -11,6 +11,8 @@ This skill defines a visual language, not a single layout. A dashboard may conta
 
 ## Getting started
 
+Match the requested mode. Build or restyle only when implementation is requested. For a review, inspect and report without changing the product; read [references/audit.md](references/audit.md). In an audit-only task, do not apply skill updates either. For shared team settings, density choices, or version adoption, read [references/team-use.md](references/team-use.md).
+
 For an installed release, check for updates at the start of a task if Node.js 20 or newer is already available: run `node "<skill-directory>/scripts/update.mjs" auto` using the actual location of this skill, not the project directory. Without saved opt-in, this command must remain local and do nothing. Do not install Node, enable updates, schedule jobs, or bypass network permissions automatically. If Node is unavailable, continue with the installed version.
 
 Before enabling or managing updates, read [references/updates.md](references/updates.md). If an update succeeds, reread this file and the resources needed for the task before implementation. If the updater reports a conflict, failure, or manual upgrade requirement, report it and keep the current version; do not force replacement or retry in a loop. An incomplete update requires recovery before using the skill. Update consent covers this skill only, never generated projects.
@@ -19,7 +21,15 @@ Inspect the available data and what the user needs to do on the screen. Identify
 
 When updating an interface, preserve working flows, data, and the chosen stack. Change only what the request covers. This style does not require a component library, image generator, ESLint, or a new build system.
 
+For a new interface, use English unless the user specifies another interface language. The language of the conversation alone is not a request to localize the product. Other languages can be requested separately. Do not add translations, language switches, locale menus, or a translation framework by default. For an existing product, preserve its language and any working localization unless changing them is requested.
+
+If the task includes creating or replacing icons, ask once before choosing the icon source: "Would you like custom icons generated for this dashboard, or a ready-made SVG icon set?" Ask in the conversation's language. An explicit choice already made by the user counts as the answer. Continue unrelated layout work while waiting, but do not start generation without that choice. For styling-only tasks that preserve existing icons, do not interrupt with this question. Follow the icon guidance in [references/components.md](references/components.md).
+
 Before implementation, read [assets/graphite.css](assets/graphite.css) for the source tokens and base surfaces. Consult [references/components.md](references/components.md) for the components you need. [examples/index.html](examples/index.html) demonstrates materials and typography, not a mandatory composition.
+
+Use the shared material roles before adding one-off gradients: `.gd-panel--recessed` for a working area, `.gd-panel` for ordinary content, `.gd-panel--raised` for contextual details, and `.gd-panel--overlay` for floating content. Modifiers accompany `.gd-panel`; they do not implement layout, selection, or dialog behavior. [examples/states.html](examples/states.html) demonstrates controls, density, and data states. Do not import the entire gallery into a product.
+
+For a standalone deliverable, copy the CSS, bundled font, and license files into the project's own assets, preserving relative font paths. Do not leave the dashboard linked to a local skill-installation path. For an existing build system, integrate equivalent local assets through that system instead.
 
 ## What defines the style
 
@@ -37,12 +47,14 @@ Preserve this foundation:
 | Active surface | `rgba(34, 38, 41, .82)` |
 | Primary text | `#f3f5f6` |
 | Secondary text | `#b7bdc1` |
-| Labels | `#929a9f` |
+| Labels | `#a1a9ae` |
 | Subtle border | `rgba(231, 239, 244, .09)` |
 | Visible border | `rgba(231, 239, 244, .18)` |
 | Selected element | `#f7fbff` |
 
 Black should not collapse into one flat void. Separate levels through small differences in lightness. Do not replace the foundation with navy backgrounds and purple gradients.
+
+Build visible depth, not a collection of identical gray cards: a near-black shell, darker working areas, a lifted graphite inspector or overlay, and a brighter selected object. Use a restrained directional highlight and an inset lower shadow to shape large surfaces. Keep text regions readable and avoid broad glowing clouds. Compare these layers in a rendered screenshot, including the open controls, rather than checking token values alone.
 
 ### Restrained glass surfaces
 
@@ -100,11 +112,13 @@ Group related metrics. Show details in the context of the selected object. Small
 
 Use a 4 px spacing increment. Gaps of 12-16 px between large areas and padding of 20-24 px are useful starting points, not a requirement to squeeze every screen into one grid.
 
+Use the default comfortable spacing unless the task needs a denser working view. `data-density="compact"` reduces spacing and row height without shrinking fonts. Apply it to the theme or a scoped content container, preserve touch targets, and do not add a user-facing density switch unless it is useful for the product.
+
 Do not fix an analytics panel's height before checking long values and translations. On narrow screens, change the structure rather than scaling down the whole interface. A wide table can scroll inside its own area without stretching the page.
 
 ## Data and state
 
-Keep the monochrome foundation. Distinguish statuses through labels, marker shapes, and line styles, not lightness alone. If color is necessary for safe interpretation in a particular product, add a small semantic accent. Do not hide errors to preserve the palette.
+Keep the interface monochrome by default, including warnings, errors, charts, menus and form controls. Do not introduce orange, amber, green, blue or other semantic accent colors without the user's explicit request or an existing product requirement. Use clear status text, marker shapes, dashed borders or hatching to distinguish states. Do not hide errors to preserve the palette. If a safety requirement genuinely needs color, explain the conflict and obtain a choice rather than silently changing the visual direction.
 
 Choose chart types based on the data. Do not use three different charts solely for variety. Comparing the same metric usually benefits from consistent scales and representations.
 
@@ -112,30 +126,37 @@ The selected line may be brighter than the others. Grids and helper lines stay i
 
 Do not invent analytics when styling existing data. Label synthetic data in demos. Dates, totals, percentages, and chart endpoints must agree with displayed values. Do not present a recommendation as model output when there is no model.
 
+Distinguish zero, missing, loading, stale, partial, and access-restricted data. Preserve the user's selection and filters through refreshes unless they are no longer valid. Show the time and scope of incomplete data; a partial total must not look like a complete total. Use only states the product can actually detect.
+
 ## Controls
 
 Buttons are usually 38-42 px tall with 9-11 px corner radii. Increase touch targets on touch screens. Text and icons should feel balanced in size.
 
-Use one family of outline icons, usually 16-20 px with a stroke around 1.5 px. Do not generate raster icons for ordinary actions.
+Use one coherent family of monochrome outline icons: simple geometric shapes, rounded line ends and joins, and consistent visual weight. Use a 24-unit design grid, usually displayed at 16-20 px, with a stroke around 1.5-1.65 units. Keep navigation icons quiet until active. See the icon guidance in [references/components.md](references/components.md) for generation and implementation.
 
 Icon-only buttons need accessible names. Do not remove every visible map control for a cleaner screenshot. Gestures and shortcuts supplement controls rather than replace the only accessible way to act.
 
 Use `.gd-input` for text fields, selects, and textareas, with a real label. Use a native `disabled` attribute where supported. `aria-disabled` only changes semantics and appearance: the application must block activation itself. Pair `aria-invalid` with a visible explanation linked by `aria-describedby`.
 
+Design and test the opened control, not only its closed button. Dropdown options, selected and hovered options, popovers, validation messages and keyboard focus must use the same graphite material system. The CSS includes customizable native selects where `appearance: base-select` is supported. Check the target runtime. If uniform popup styling is required in unsupported browsers, use an accessible select component from the project's stack; the native fallback is functional but not visually equivalent. See the component reference for the interaction checklist.
+
 ## Checks before delivery
 
 Inspect the interface in a browser with real data or a clearly labeled demo. If a browser is unavailable, say so instead of claiming visual verification.
+
+For changes to this reusable package, follow [references/testing.md](references/testing.md). Its tests are maintainer tools, not dependencies to add to every dashboard. For a product using the skill, test that product's controls and data rather than claiming the package tests cover it.
 
 Check that:
 
 - Dark surfaces remain distinct without looking like a striped gray grid.
 - The primary action and selected object stand out without lighting up the entire screen.
-- Russian and English strings fit without clipping or unintended wrapping.
+- Strings in the requested interface language fit without clipping or unintended wrapping. Test additional languages only when the product supports them; do not add translations to satisfy this check.
 - Metrics remain readable with long numbers and browser zoom.
 - Resize narrow panels inside wide pages as well as the page itself. Check around layout breakpoints, including 600/601 px and 1024 px. Chart labels should retain their intended screen-pixel size; a fixed SVG font size alone does not guarantee that.
-- The font actually loads. Check Cyrillic and currency symbols separately.
+- The font actually loads. Check the currency symbols and scripts used by the product; check Cyrillic only when it is present.
 - Text contrast is sufficient: aim for 4.5:1 for normal text and 3:1 for large text. Check the final surface, including transparency.
 - Meaningful lines and control states remain visible. Keyboard interaction and visible focus work.
+- Open every dropdown and popover. Check selection, hover, keyboard navigation, Escape, outside dismissal, long options, scroll and viewport-edge placement. Do not approve an interface using only screenshots of closed controls.
 - Fixed heights do not clip lower charts or buttons.
 - Optional animations are removed when reduced motion is requested.
 - The result preserves the user's product rather than becoming a copy of the demo.

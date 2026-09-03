@@ -40,6 +40,20 @@ Do not pad a short menu with invented sections. Give the active item a slightly 
 
 Collapsed menus retain accessible names and tooltips. Do not replace clear navigation with unfamiliar symbols.
 
+## Icons
+
+Before creating or replacing icons, obtain the user's choice of custom generation or a ready-made SVG family as described in SKILL.md. Do not generate icons just because this skill was invoked. Preserve existing icons when the request is limited to styling.
+
+Use a restrained technical outline style. Draw on a 24 x 24 grid with balanced internal space, simple paths, small circular details where meaningful, rounded caps and joins, and a consistent stroke around 1.5-1.65 units. Display ordinary action icons at 16-20 px; navigation icons may be 20-22 px. Adjust optical alignment without stretching one axis. Avoid bulky filled silhouettes, emoji, multicolor gradients, 3D objects, and decorative detail that disappears at actual size.
+
+Use `fill="none"`, `stroke="currentColor"`, `stroke-linecap="round"`, and `stroke-linejoin="round"` for outline SVGs. Inactive icons use the theme's muted text color. An active icon becomes near-white on a small rounded graphite backing. Any subtle highlight belongs to the selected control, not every stroke. Focus must remain distinct from selection. Familiar action meanings matter more than novel shapes; keep plus, minus, search, and close immediately recognizable. Brand logos are separate from the interface icon family and should not be invented or redrawn as generic action icons.
+
+If the user chooses a ready-made set, use one licensed SVG family already available in the project or select a suitable one. Do not mix unrelated families or add an icon-library dependency when a few permitted SVGs suffice. Retain required license notices.
+
+If the user chooses generation, clarify only what is still missing, such as which actions need icons. Use the available generation tool when image generation is requested; disclose if it is unavailable. A suitable brief is: "A coherent set of monochrome outline dashboard icons, 24-unit grid, thin consistent strokes, rounded caps and joins, simple geometric construction, balanced negative space, no text, no gradients, no shadows baked into the icons, transparent background. Each icon must remain recognizable at 20 px. Actions: [actual product actions]." Do not send private product data when action names are sufficient.
+
+Generated raster artwork is a design reference, not a drop-in replacement for small UI controls. Implement approved shapes as clean SVGs where feasible and inspect them at 16, 20, and 24 px. Do not claim that an image generator produces production-ready vectors. For generated decorative illustrations, keep them separate from action icons. Sanitize externally supplied SVGs: no scripts, event handlers, or remote resources. Icon-only controls require accessible names; decorative SVGs use `aria-hidden="true"`.
+
 ## Selected object
 
 Use one light outline and a soft halo. Keep neighboring objects visible so the selection retains context.
@@ -60,7 +74,7 @@ When the selected object changes, update values, charts, and explanations togeth
 
 A button label states a clear action. Its fill is slightly lighter than the panel, and its border more visible than nearby dividers. Use a radius around 10 px and horizontal padding around 16 px.
 
-For grouped switches, show selection through fill and text. If using an underline, place it below the text baseline. Do not strike through the active language.
+For grouped switches, show selection through fill and text. If using an underline, place it below the text baseline. A language switch belongs here only when the user requested localization or the existing product already has it; never add one as decoration.
 
 Unavailable actions need a real `disabled` state or appropriate logic, not just a grayer color. Hover states do not replace keyboard focus.
 
@@ -72,9 +86,57 @@ Wrap a field in a label with `.gd-field`, or connect a separate label using `for
 
 For an invalid value, set `aria-invalid="true"` and link a visible `.gd-field-error` explanation with `aria-describedby`. A light border alone does not communicate the error. Disabled fields use native `disabled`; keep read-only and disabled behavior distinct.
 
+### Dropdowns and popovers
+
+For single-choice `.gd-input` selects, the CSS progressively enhances the native control with `appearance: base-select` and `::picker(select)`. This retains native labels, form values and keyboard semantics while styling the popup. It shares `--gd-material-overlay`, `--gd-overlay-shadow` and `--gd-border-overlay` with overlay panels. The defaults are a 12 px popup radius, 6 px internal padding, 40 px option rows, a quiet checkmark and a distinct gray hover/focus state. Compact density reduces option rows to 36 px; coarse-pointer devices keep at least 44 px. Never leave a bright blue operating-system selection inside an otherwise monochrome control and claim visual parity.
+
+The enhanced popup follows its control's width, with a viewport maximum, and long option names wrap. Check the horizontal bounds of open options themselves; document width can remain correct while a top-layer popup is clipped.
+
+Feature-detect support and test the actual browsers in scope. Unsupported browsers retain their native popup; this is an accessibility fallback, not the same design. For cross-browser visual parity, use the project's tested accessible select/listbox implementation, including correct labeling, selection announcements, disabled options, Arrow keys, Home/End, typeahead, Enter/Space, Escape and Tab. Do not replace a select with clickable divs. In either implementation verify that the popup escapes clipped panels, stays within the viewport, scrolls for long lists, and closes on outside interaction without losing the selected value.
+
+Checkboxes and radio buttons also need checked, unchecked, focus and disabled states. Keep their marks monochrome and the native input semantics intact. Their accent is themed, but their exact native shape is browser-dependent. Use a real enclosing label to enlarge the target without stretching the checkbox artwork; make that target at least 44 px on touch devices. Interactive table rows must account for the control's target height plus cell padding; the suggested row height is not an extra fixed constraint on top of those dimensions.
+
 ## Surface tokens and isolation
 
-Panel fills use `--gd-surface` with `--gd-raised` for the top layer. Fields use `--gd-recess`. Set these values on `.gd-theme` to adapt surfaces consistently. Add `.gd-glass` to a panel only where backdrop blur has useful content behind it; the default panel keeps an opaque fallback.
+The package includes four surface roles. Use the same role for the same purpose throughout a product. Add the variant alongside `.gd-panel`; variants change materials, not layout or behavior.
+
+| Class | Use | Material token |
+| --- | --- | --- |
+| `.gd-panel` | Normal content, tables and charts | `--gd-material-panel` |
+| `.gd-panel.gd-panel--recessed` | A working canvas or nested data region | `--gd-material-recessed` |
+| `.gd-panel.gd-panel--raised` | Contextual details or an inspector | `--gd-material-raised` |
+| `.gd-panel.gd-panel--overlay` | A dialog or popover above the workspace | `--gd-material-overlay` |
+
+Each role has an opaque base, a directional highlight and a suitable shadow. The selected object has its own material and halo, rather than borrowing the overlay's elevation. Do not stack all four roles just to show depth. A flat table inside one panel remains appropriate.
+
+```html
+<main class="gd-theme">
+  <section class="gd-panel gd-panel--recessed">Working area</section>
+  <aside class="gd-panel gd-panel--raised">Selected item details</aside>
+</main>
+```
+
+Customize foundational colors on the theme root: `--gd-surface`, `--gd-recess`, `--gd-surface-raised`, `--gd-surface-overlay`, `--gd-raised` and `--gd-active`. They feed the material layers. Override a `--gd-material-*` token to replace an entire background. Overlay panels and select popups consume the same overlay material, border and shadow tokens. Buttons, selected items, fields and charts also use named state tokens; do not add a second private palette for them.
+
+Common adjustment points:
+
+- Borders: `--gd-line`, `--gd-line-soft`, `--gd-control-border`, `--gd-border-hover`, `--gd-border-selected`, `--gd-border-overlay`.
+- Depth: `--gd-highlight`, `--gd-highlight-strong`, `--gd-edge-light`, `--gd-shade`, `--gd-panel-shadow`, `--gd-raised-shadow`, `--gd-overlay-shadow`.
+- Selection: `--gd-material-selected`, `--gd-selected-shadow`, `--gd-state-selected`, `--gd-state-hover`.
+- Charts: `--gd-chart-stroke`, `--gd-chart-target`, `--gd-chart-glow`, `--gd-selected`.
+- Controls: `--gd-material-control`, `--gd-material-control-hover`, `--gd-input-shadow`, `--gd-control-shadow`.
+
+```css
+/* Load after graphite.css. Keep product-specific changes in one file. */
+.gd-theme {
+  --gd-surface-overlay: #1c2023;
+  --gd-radius-panel: 16px;
+}
+```
+
+Put foundational overrides on `.gd-theme`, not a child: composite custom properties resolve where they are defined. For a one-off descendant, override its complete material token. Keep screenshots of each material and an open menu when reviewing theme changes. A different value in a token file is not proof of a readable result.
+
+Add `.gd-glass` to a panel only where backdrop blur has useful content behind it; without that opt-in every material has an opaque fallback. The overlay class provides appearance, not focus management, positioning or dismissal. A native `<dialog class="gd-panel gd-panel--overlay">` also receives themed text and a `--gd-backdrop` tint; open it with `showModal()`, label it, provide a close button and test focus return. Keep an existing accessible dialog implementation when the project already has one.
 
 Component rules apply to descendants of `.gd-theme`. Use a theme wrapper around components, not a component class on the theme root itself. The font-face declaration is necessarily document-wide.
 
@@ -86,8 +148,21 @@ An error needs a written explanation or a clear next step. A monochrome style is
 
 ## Density and responsiveness
 
+The default density is comfortable. Set `data-density="compact"` on `.gd-theme` or a descendant container to reduce spacing for repeated daily work. Set `data-density="comfortable"` on a nested region to reset it. No user-facing density switch is required; choose the initial mode from the task.
+
+```html
+<main class="gd-theme">
+  <section class="gd-panel" data-density="compact">
+    <!-- A dense table or repeated control list. -->
+    <div data-density="comfortable">A less dense detail region.</div>
+  </section>
+</main>
+```
+
+Compact mode changes panel and cell padding, metric spacing and control dimensions. It does not reduce fonts, chart labels or icon size. Default control minimums change from 42 px to 36 px; plain table rows change from 48 px to 40 px. These are minimums, not forced heights. Wrapped text and controls may require more space. On coarse-pointer devices button, field, selectable-item and option minimums remain 44 px in either density. Density does not replace responsive layout.
+
 Start by checking 1440 px and 1280 px. If the product needs mobile support, also check around 390 px. At 200% browser zoom, primary actions should remain available even if the layout changes.
 
 On narrow screens, stacking sections usually works better than shrinking every font. Headings should not take more space than the content.
 
-Allow for long object names, decimals, negative numbers, currencies, and translations. A demo with short English words does not establish that the Russian version will fit.
+Allow for long object names, decimals, negative numbers, and currencies. When localization is in scope, test the supported translations too. A short English demo does not establish that longer strings will fit.

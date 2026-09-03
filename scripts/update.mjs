@@ -8,7 +8,17 @@ import { createHash, randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 export const REPOSITORY = 'SLtowl/graphite-dashboard-design';
-export const ALLOWED = new Set(['README.md','SKILL.md','LICENSE','.gitignore','.gitattributes','agents/openai.yaml','assets/graphite.css','assets/fonts/OFL.txt','assets/fonts/instrument-sans-variable.woff2','assets/readme-surfaces.png','assets/readme-typography.png','cover.png','preview.png','references/components.md','references/updates.md','examples/index.html','scripts/update.mjs','tests/update.test.mjs']);
+export const ALLOWED = new Set([
+  'README.md', 'SKILL.md', 'LICENSE', '.gitignore', '.gitattributes',
+  'agents/openai.yaml', 'assets/graphite.css', 'assets/fonts/OFL.txt',
+  'assets/fonts/instrument-sans-variable.woff2', 'assets/readme-surfaces.png',
+  'assets/readme-typography.png', 'cover.png', 'preview.png',
+  'references/components.md', 'references/updates.md', 'references/audit.md',
+  'references/team-use.md', 'references/testing.md', 'examples/index.html',
+  'examples/states.html', 'examples/states.css', 'examples/states.js',
+  'scripts/update.mjs', 'scripts/check-package.mjs', 'tests/update.test.mjs',
+  'tests/ui.test.mjs', 'package.json', 'package-lock.json'
+]);
 const MAX_FILE = 16 * 1024 * 1024, MAX_TOTAL = 64 * 1024 * 1024, DAY = 86400000;
 const digest = b => createHash('sha256').update(b).digest('hex');
 const fail = message => { throw new Error(message); };

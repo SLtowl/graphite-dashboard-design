@@ -2,6 +2,8 @@
 
 Updates are off by default. Run these commands from the installed skill folder with Node.js 20 or newer. No dependencies are installed.
 
+The 1.2.0 package adds files and expands the fixed updater allowlist. Installations on 1.1.x require a reviewed manual upgrade, not an automatic replacement. See [team-use.md](team-use.md) for the separate-copy workflow. Changing this compatibility boundary does not authorize a new installation or reset existing consent.
+
 ```sh
 node scripts/update.mjs status
 node scripts/update.mjs check

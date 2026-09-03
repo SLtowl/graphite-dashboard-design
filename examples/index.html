@@ -8,17 +8,23 @@
   <style>
     body { margin: 0; padding: 32px; }
     main { max-width: 1120px; margin: auto; padding: 28px; }
-    header { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 24px; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--gd-line-soft); }
     h1 { margin: 6px 0 8px; font-size: 28px; font-weight: 540; letter-spacing: -.025em; }
-    .demo-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, 1fr); gap: 16px; margin-top: 16px; }
-    .demo-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+    .demo-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 20px; margin-top: 24px; }
+    .demo-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; }
     .demo-chart { display: block; width: 100%; height: 216px; margin-top: 20px; }
     .demo-chart text { fill: var(--gd-muted); font-family: var(--gd-font); font-size: 12px; }
     .demo-options { display: grid; gap: 12px; margin-top: 20px; }
     .demo-options button { display: grid; gap: 6px; text-align: left; cursor: pointer; font-family: var(--gd-font); }
     .demo-options strong { font-size: 15px; font-weight: 540; }
-    .demo-table { margin-top: 16px; }
-    footer.gd-caption { margin-top: 20px; }
+    .demo-selection { align-self: center; }
+    .demo-table { margin-top: 24px; }
+    .demo-table .demo-heading { margin-bottom: 20px; }
+    .demo-table .gd-table caption { padding: 0 16px 16px; }
+    .demo-table-hint { margin-top: 12px; }
+    .demo-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px 32px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--gd-line-soft); }
+    .demo-footer p { flex: 1 1 320px; max-width: 520px; }
+    .demo-footer .gd-button { flex: 0 1 auto; }
     @media (max-width: 850px) { .demo-grid { grid-template-columns: 1fr; } }
     @media (max-width: 600px) { body { padding: 12px; } main { padding: 16px; } header { align-items: flex-start; flex-direction: column; } h1 { font-size: 24px; } }
   </style>
@@ -41,7 +47,7 @@
     </dl>
 
     <div class="demo-grid">
-      <section class="gd-panel" aria-labelledby="chart-heading">
+      <section class="gd-panel gd-panel--recessed" aria-labelledby="chart-heading">
         <div class="demo-heading"><h2 class="gd-panel-title" id="chart-heading">p95 latency</h2><span class="gd-caption">May 12-18 · ms</span></div>
         <svg class="demo-chart" viewBox="0 0 520 216" role="img" aria-labelledby="chart-title chart-desc">
           <title id="chart-title">Latency over seven days</title>
@@ -51,11 +57,11 @@
           <text x="0" y="32">160</text><text x="0" y="92">140</text><text x="0" y="152">120</text>
           <text x="342" y="78">Target ≤ 140</text>
           <polyline class="gd-chart-line" points="44,58 118,73 192,91 266,82 340,118 414,136 488,124"/>
-          <circle cx="488" cy="124" r="4" fill="#f7fbff"/>
+          <circle cx="488" cy="124" r="4" fill="var(--gd-selected)"/>
           <g text-anchor="middle"><text x="44" y="184">12</text><text x="118" y="184">13</text><text x="192" y="184">14</text><text x="266" y="184">15</text><text x="340" y="184">16</text><text x="414" y="184">17</text><text x="488" y="184">18</text></g>
         </svg>
       </section>
-      <section class="gd-panel" aria-labelledby="selection-heading">
+      <section class="gd-panel gd-panel--raised demo-selection" aria-labelledby="selection-heading">
         <h2 class="gd-panel-title" id="selection-heading">Selection state</h2>
         <p class="gd-caption" style="margin-top:8px">Click an item to compare states.</p>
         <div class="demo-options" role="group" aria-label="Selection samples">
@@ -66,6 +72,7 @@
     </div>
 
     <section class="gd-panel demo-table" aria-label="Table sample">
+      <div class="demo-heading"><h2 class="gd-panel-title">Service activity</h2><span class="gd-caption">May 12-18</span></div>
       <div class="gd-table-wrap" tabindex="0" role="region" aria-label="Horizontally scrollable service table">
         <table class="gd-table">
           <caption>Two of twelve services. Remaining requests: 6,260.</caption>
@@ -73,8 +80,9 @@
           <tbody><tr><td>Core service</td><td>Available</td><td class="gd-number">12,400</td><td class="gd-number">128</td></tr><tr><td>Background worker</td><td>Available</td><td class="gd-number">6,200</td><td class="gd-number">96</td></tr></tbody>
         </table>
       </div>
+      <p class="gd-caption demo-table-hint" id="table-scroll-hint" hidden>Scroll horizontally to see all columns.</p>
     </section>
-    <footer class="gd-caption">These are component samples, not a required dashboard layout.</footer>
+    <footer class="demo-footer"><p class="gd-caption">These are component samples, not a required dashboard layout.</p><a class="gd-button" href="states.html">Explore component states</a></footer>
   </main>
   <script>
     const chart = document.querySelector('.demo-chart');
@@ -92,11 +100,23 @@
         <path class="gd-chart-target" d="M${left} ${y(140)}H${right}"/>
         <text x="${right}" y="${y(140)-10}" text-anchor="end">Target ≤ 140</text>
         <polyline class="gd-chart-line" points="${values.map((v,i)=>`${x(i)},${y(v)}`).join(' ')}"/>
-        <circle cx="${x(6)}" cy="${y(values[6])}" r="4" fill="#f7fbff"/>
+        <circle cx="${x(6)}" cy="${y(values[6])}" r="4" fill="var(--gd-selected)"/>
         ${ticks.map(i=>`<text x="${x(i)}" y="184" text-anchor="middle">${12+i}</text>`).join('')}`;
     }
     new ResizeObserver(drawChart).observe(chart);
     drawChart();
+    const tableRegion = document.querySelector('.demo-table .gd-table-wrap');
+    const tableHint = document.querySelector('#table-scroll-hint');
+    function updateTableOverflow() {
+      const overflowing = tableRegion.scrollWidth > tableRegion.clientWidth + 1;
+      tableHint.hidden = !overflowing;
+      if (overflowing) tableRegion.setAttribute('aria-describedby', tableHint.id);
+      else tableRegion.removeAttribute('aria-describedby');
+    }
+    const tableObserver = new ResizeObserver(updateTableOverflow);
+    tableObserver.observe(tableRegion);
+    tableObserver.observe(tableRegion.querySelector('table'));
+    updateTableOverflow();
     const options = [...document.querySelectorAll('.demo-options button')];
     options.forEach(button => button.addEventListener('click', () => {
       options.forEach(option => {

@@ -1,0 +1,15 @@
+{
+  "name": "graphite-dashboard-design",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Local verification tools for Graphite Dashboard Design",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test tests/update.test.mjs && node scripts/check-package.mjs",
+    "test:ui": "node tests/ui.test.mjs",
+    "test:ui:firefox": "node tests/ui.test.mjs --browser=firefox",
+    "test:ui:webkit": "node tests/ui.test.mjs --browser=webkit"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}

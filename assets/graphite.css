@@ -16,11 +16,58 @@
   --gd-active: rgba(34, 38, 41, .82);
   --gd-text: #f3f5f6;
   --gd-secondary: #b7bdc1;
-  --gd-muted: #929a9f;
+  --gd-muted: #a1a9ae;
   --gd-line: rgba(231, 239, 244, .18);
   --gd-line-soft: rgba(231, 239, 244, .09);
   --gd-selected: #f7fbff;
+  /* Materials stay opaque unless a panel explicitly opts into gd-glass. */
+  --gd-surface-raised: #14181b;
+  --gd-surface-overlay: #171b1e;
+  --gd-highlight: rgba(236, 243, 247, .065);
+  --gd-highlight-strong: rgba(236, 243, 247, .12);
+  --gd-edge-light: rgba(255, 255, 255, .085);
+  --gd-shade: rgba(0, 0, 0, .26);
+  --gd-shadow-color: rgba(0, 0, 0, .38);
+  --gd-overlay-shadow-color: rgba(0, 0, 0, .6);
+  --gd-backdrop: rgba(0, 0, 0, .66);
+  --gd-border-hover: rgba(247, 251, 255, .38);
+  --gd-border-selected: rgba(247, 251, 255, .76);
+  --gd-border-overlay: rgba(231, 239, 244, .24);
+  --gd-state-hover: rgba(241, 247, 250, .13);
+  --gd-state-selected: rgba(241, 247, 250, .08);
+  --gd-selection-halo: rgba(225, 239, 248, .07);
+  --gd-control-top: #2c3236;
+  --gd-control-bottom: #171c1f;
+  --gd-control-hover-top: #353d42;
+  --gd-control-hover-bottom: #20272b;
+  --gd-control-active: #242b2f;
+  --gd-control-border: rgba(239, 247, 250, .26);
+  --gd-input-shadow: inset 0 2px 5px var(--gd-shade), inset 0 1px var(--gd-line-soft);
+  --gd-control-shadow: inset 0 1px var(--gd-edge-light), 0 5px 12px var(--gd-shade);
+  --gd-panel-shadow: inset 0 1px var(--gd-edge-light), inset 0 -50px 80px var(--gd-shade), 0 22px 54px var(--gd-shadow-color);
+  --gd-raised-shadow: inset 0 1px var(--gd-highlight-strong), inset 0 -40px 70px var(--gd-shade), 0 16px 40px var(--gd-shadow-color);
+  --gd-overlay-shadow: inset 0 1px var(--gd-highlight-strong), 0 16px 44px var(--gd-overlay-shadow-color);
+  --gd-selected-shadow: inset 0 1px var(--gd-highlight-strong), 0 0 0 1px var(--gd-selection-halo), 0 0 20px var(--gd-selection-halo), 0 8px 20px var(--gd-shade);
+  --gd-material-shell: radial-gradient(ellipse at 38% 0%, var(--gd-highlight), transparent 48%), var(--gd-shell);
+  --gd-material-panel: linear-gradient(155deg, var(--gd-highlight), transparent 52%), var(--gd-surface);
+  --gd-material-recessed: linear-gradient(180deg, var(--gd-highlight), transparent 36%), var(--gd-recess);
+  --gd-material-raised: radial-gradient(ellipse at 12% 0%, var(--gd-highlight-strong), transparent 62%), linear-gradient(160deg, var(--gd-active), transparent 85%), var(--gd-surface-raised);
+  --gd-material-overlay: linear-gradient(145deg, var(--gd-active), transparent 85%), var(--gd-surface-overlay);
+  --gd-material-control: linear-gradient(145deg, var(--gd-control-top), var(--gd-control-bottom));
+  --gd-material-control-hover: linear-gradient(145deg, var(--gd-control-hover-top), var(--gd-control-hover-bottom));
+  --gd-material-selectable: linear-gradient(135deg, var(--gd-highlight-strong), transparent), var(--gd-surface);
+  --gd-material-selected: linear-gradient(135deg, var(--gd-highlight-strong), transparent), var(--gd-active);
+  --gd-chart-stroke: #c8d1d6;
+  --gd-chart-target: var(--gd-muted);
+  --gd-chart-glow: rgba(224, 238, 245, .22);
+  --gd-checkbox-mark: #d7dfe3;
+  --gd-text-selection: #42494d;
+  --gd-scrollbar-thumb: #555c60;
+  --gd-scrollbar-track: var(--gd-recess);
+  --gd-disabled-opacity: .5;
   --gd-radius-control: 10px;
+  --gd-radius-item: 12px;
+  --gd-radius-option: 7px;
   --gd-radius-panel: 18px;
   --gd-radius-shell: 22px;
   --gd-space-1: 4px;
@@ -30,6 +77,17 @@
   --gd-space-5: 20px;
   --gd-space-6: 24px;
   --gd-space-8: 32px;
+  --gd-panel-padding: var(--gd-space-6);
+  --gd-metric-padding: 16px 20px;
+  --gd-item-padding: 16px;
+  --gd-control-height: 42px;
+  --gd-button-padding: 8px 16px;
+  --gd-input-padding: 10px 12px;
+  --gd-option-height: 40px;
+  --gd-option-padding: 10px 12px;
+  --gd-table-row-height: 48px;
+  --gd-table-cell-padding: 12px 16px;
+  --gd-target-min: 0px;
   --gd-font: "Instrument Sans", "Segoe UI", sans-serif;
   color: var(--gd-text);
   background: var(--gd-page);
@@ -53,19 +111,23 @@
   min-width: 0;
   border: 1px solid var(--gd-line);
   border-radius: var(--gd-radius-shell);
-  background: var(--gd-shell);
-  box-shadow: 0 34px 90px rgba(0, 0, 0, .5), inset 0 1px rgba(255, 255, 255, .035);
+  background: var(--gd-material-shell);
+  box-shadow: 0 34px 90px var(--gd-overlay-shadow-color), inset 0 1px var(--gd-edge-light), inset 0 -40px 90px var(--gd-shade);
 }
 
 :where(.gd-theme) .gd-panel {
   min-width: 0;
-  padding: var(--gd-space-6);
+  padding: var(--gd-panel-padding);
   border: 1px solid var(--gd-line-soft);
   border-radius: var(--gd-radius-panel);
-  background-color: var(--gd-surface);
-  background-image: linear-gradient(145deg, var(--gd-raised), transparent 72%);
-  box-shadow: inset 0 1px rgba(255, 255, 255, .045), 0 18px 40px rgba(0, 0, 0, .24);
+  background: var(--gd-material-panel);
+  box-shadow: var(--gd-panel-shadow);
 }
+:where(.gd-theme) .gd-panel--recessed { background: var(--gd-material-recessed); box-shadow: var(--gd-input-shadow); }
+:where(.gd-theme) .gd-panel--raised { background: var(--gd-material-raised); border-color: var(--gd-line); box-shadow: var(--gd-raised-shadow); }
+:where(.gd-theme) .gd-panel--overlay { background: var(--gd-material-overlay); border-color: var(--gd-border-overlay); box-shadow: var(--gd-overlay-shadow); }
+:where(.gd-theme) dialog.gd-panel--overlay { color: var(--gd-text); }
+:where(.gd-theme) dialog.gd-panel--overlay::backdrop { background: var(--gd-backdrop); }
 /* Opt in only when there is visible content behind the panel. Opaque fallback above. */
 @supports (backdrop-filter: blur(1px)) {
   :where(.gd-theme) .gd-panel.gd-glass { background-color: var(--gd-raised); backdrop-filter: blur(16px); }
@@ -89,9 +151,9 @@
   flex: 1 1 max-content;
   min-width: min(100%, 220px);
   max-width: 100%;
-  padding: 16px 20px;
+  padding: var(--gd-metric-padding);
   background: var(--gd-surface);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, .025), transparent);
+  background-image: linear-gradient(135deg, var(--gd-highlight), transparent);
 }
 :where(.gd-theme) .gd-metric dt { margin: 0; color: var(--gd-secondary); font-size: 12px; overflow-wrap: anywhere; }
 :where(.gd-theme) .gd-metric dd { margin: 6px 0 0; max-width: 100%; overflow-x: auto; white-space: nowrap; font-size: 24px; font-weight: 540; line-height: 1.4; font-variant-numeric: tabular-nums; letter-spacing: -.025em; }
@@ -103,12 +165,13 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 42px;
+  min-height: max(var(--gd-control-height), var(--gd-target-min));
+  min-width: var(--gd-target-min);
   max-width: 100%;
-  padding: 8px 16px;
-  border: 1px solid rgba(239, 247, 250, .26);
+  padding: var(--gd-button-padding);
+  border: 1px solid var(--gd-control-border);
   border-radius: var(--gd-radius-control);
-  background: rgba(238, 246, 250, .075);
+  background: var(--gd-material-control);
   color: var(--gd-text);
   font-size: 13px;
   line-height: 1.35;
@@ -116,34 +179,35 @@
   text-decoration: none;
   overflow-wrap: anywhere;
   cursor: pointer;
-  box-shadow: inset 0 1px rgba(255, 255, 255, .055);
+  box-shadow: var(--gd-control-shadow);
   transition: background 140ms ease, border-color 140ms ease;
 }
-:where(.gd-theme) .gd-button:hover { background: rgba(238, 246, 250, .12); border-color: rgba(247, 251, 255, .44); }
-:where(.gd-theme) .gd-button:active { background: rgba(238, 246, 250, .16); }
-:where(.gd-theme) .gd-button:is(:disabled, [aria-disabled="true"]) { opacity: .5; cursor: not-allowed; background: rgba(238, 246, 250, .075); border-color: rgba(239, 247, 250, .26); }
+:where(.gd-theme) .gd-button:hover { background: var(--gd-material-control-hover); border-color: var(--gd-border-hover); }
+:where(.gd-theme) .gd-button:active { background: var(--gd-control-active); }
+:where(.gd-theme) .gd-button:is(:disabled, [aria-disabled="true"]) { opacity: var(--gd-disabled-opacity); cursor: not-allowed; background: var(--gd-material-control); border-color: var(--gd-control-border); box-shadow: none; }
 :where(.gd-theme) .gd-button svg { width: 18px; height: 18px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 :where(.gd-theme) .gd-selectable {
   min-width: 0;
   max-width: 100%;
-  padding: 16px;
+  padding: var(--gd-item-padding);
   border: 1px solid var(--gd-line);
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, .065), rgba(255, 255, 255, .018));
+  border-radius: var(--gd-radius-item);
+  background: var(--gd-material-selectable);
+  box-shadow: inset 0 1px var(--gd-edge-light);
   color: var(--gd-secondary);
   overflow-wrap: anywhere;
 }
-:where(.gd-theme) :is(button.gd-selectable, a.gd-selectable) { cursor: pointer; }
-:where(.gd-theme) .gd-selectable:hover { border-color: rgba(247, 251, 255, .38); background-color: rgba(255, 255, 255, .03); }
+:where(.gd-theme) :is(button.gd-selectable, a.gd-selectable) { cursor: pointer; min-height: max(var(--gd-control-height), var(--gd-target-min)); min-width: var(--gd-target-min); }
+:where(.gd-theme) .gd-selectable:hover { border-color: var(--gd-border-hover); background-color: var(--gd-surface-raised); }
 :where(.gd-theme) .gd-selectable[aria-pressed="true"], :where(.gd-theme) .gd-selected {
-  border-color: rgba(247, 251, 255, .76);
+  border-color: var(--gd-border-selected);
   color: var(--gd-text);
-  background: var(--gd-active);
-  box-shadow: 0 0 0 1px rgba(247, 251, 255, .06), 0 0 20px rgba(225, 239, 248, .07);
+  background: var(--gd-material-selected);
+  box-shadow: var(--gd-selected-shadow);
 }
 :where(.gd-theme) .gd-selectable:is(:disabled, [aria-disabled="true"]) {
-  opacity: .5;
+  opacity: var(--gd-disabled-opacity);
   cursor: not-allowed;
   border-color: var(--gd-line);
   background: var(--gd-surface);
@@ -154,34 +218,116 @@
 :where(.gd-theme) .gd-input {
   width: 100%;
   min-width: 0;
-  min-height: 42px;
-  padding: 10px 12px;
+  min-height: max(var(--gd-control-height), var(--gd-target-min));
+  padding: var(--gd-input-padding);
   border: 1px solid var(--gd-line);
   border-radius: var(--gd-radius-control);
   background: var(--gd-recess);
+  box-shadow: var(--gd-input-shadow);
   color: var(--gd-text);
   font: 400 13px/1.45 var(--gd-font);
 }
 :where(.gd-theme) textarea.gd-input { min-height: 100px; resize: vertical; }
 :where(.gd-theme) .gd-input::placeholder { color: var(--gd-muted); opacity: 1; }
-:where(.gd-theme) .gd-input:hover:not(:disabled) { border-color: rgba(247, 251, 255, .38); }
-:where(.gd-theme) .gd-input:disabled { opacity: .5; cursor: not-allowed; }
+:where(.gd-theme) .gd-input:hover:not(:disabled) { border-color: var(--gd-border-hover); }
+:where(.gd-theme) .gd-input:disabled { opacity: var(--gd-disabled-opacity); cursor: not-allowed; }
+:where(.gd-theme) input[type="number"].gd-input { font-variant-numeric: tabular-nums; }
 :where(.gd-theme) .gd-input[aria-invalid="true"] { border: 2px solid var(--gd-selected); }
 :where(.gd-theme) .gd-field-error { margin: 0; color: var(--gd-text); font-size: 12px; }
 
+/* Native semantics, fully themed popup in browsers supporting base-select. */
+@supports (appearance: base-select) {
+  :where(.gd-theme) select.gd-input,
+  :where(.gd-theme) select.gd-input::picker(select) { appearance: base-select; }
+  :where(.gd-theme) select.gd-input {
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+    background: var(--gd-material-control);
+    box-shadow: var(--gd-control-shadow);
+  }
+  :where(.gd-theme) select.gd-input::picker-icon { color: var(--gd-secondary); font-size: 11px; }
+  :where(.gd-theme) select.gd-input:open { border-color: var(--gd-border-selected); }
+  :where(.gd-theme) select.gd-input::picker(select) {
+    margin-block: 7px;
+    padding: 6px;
+    border: 1px solid var(--gd-border-overlay);
+    border-radius: var(--gd-radius-item);
+    background: var(--gd-material-overlay);
+    color: var(--gd-text);
+    font: 400 13px/1.45 var(--gd-font);
+    box-shadow: var(--gd-overlay-shadow);
+    max-height: min(320px, 60dvh);
+    inline-size: anchor-size(width);
+    min-inline-size: 0;
+    max-inline-size: calc(100dvw - 24px);
+    overflow-y: auto;
+    scrollbar-color: var(--gd-scrollbar-thumb) var(--gd-scrollbar-track);
+  }
+  :where(.gd-theme) select.gd-input option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: max(var(--gd-option-height), var(--gd-target-min));
+    padding: var(--gd-option-padding);
+    border: 1px solid transparent;
+    border-radius: var(--gd-radius-option);
+    color: var(--gd-secondary);
+    background: transparent;
+    cursor: pointer;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  :where(.gd-theme) select.gd-input option:checked { color: var(--gd-text); background: var(--gd-state-selected); border-color: var(--gd-line-soft); }
+  :where(.gd-theme) select.gd-input option:is(:hover,:focus) { background: var(--gd-state-hover); color: var(--gd-text); outline: none; border-color: var(--gd-control-border); }
+  :where(.gd-theme) select.gd-input option:focus-visible { outline: 2px solid var(--gd-selected); outline-offset: -2px; }
+  :where(.gd-theme) select.gd-input option::checkmark { color: var(--gd-text); font-size: 12px; }
+  :where(.gd-theme) select.gd-input option:disabled { opacity: var(--gd-disabled-opacity); cursor: not-allowed; color: var(--gd-muted); background: transparent; border-color: transparent; }
+  :where(.gd-theme) select.gd-input:disabled { cursor: not-allowed; box-shadow: none; }
+}
+
+:where(.gd-theme) input:is([type="checkbox"], [type="radio"]) { accent-color: var(--gd-checkbox-mark); }
+:where(.gd-theme) ::selection { background: var(--gd-text-selection); color: var(--gd-text); }
+
 :where(.gd-theme) .gd-table-wrap { overflow-x: auto; min-width: 0; }
 :where(.gd-theme) .gd-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
-:where(.gd-theme) .gd-table th { padding: 12px 16px; color: var(--gd-muted); font-size: 11px; font-weight: 500; }
-:where(.gd-theme) .gd-table td { height: 48px; padding: 12px 16px; border-top: 1px solid var(--gd-line-soft); }
+:where(.gd-theme) .gd-table th { padding: var(--gd-table-cell-padding); color: var(--gd-muted); font-size: 11px; font-weight: 500; }
+:where(.gd-theme) .gd-table td { height: var(--gd-table-row-height); padding: var(--gd-table-cell-padding); border-top: 1px solid var(--gd-line-soft); }
 :where(.gd-theme) .gd-table .gd-number { text-align: right; }
-:where(.gd-theme) .gd-table tbody tr:hover { background: rgba(255, 255, 255, .025); }
+:where(.gd-theme) .gd-table tbody tr:hover { background: var(--gd-highlight); }
 :where(.gd-theme) .gd-table caption { padding: 0 16px 12px; text-align: left; color: var(--gd-secondary); font-size: 12px; }
 
-:where(.gd-theme) .gd-chart-line { fill: none; stroke: #c8d1d6; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+:where(.gd-theme) .gd-chart-line { fill: none; stroke: var(--gd-chart-stroke); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 :where(.gd-theme) .gd-chart-grid { stroke: var(--gd-line-soft); stroke-width: 1; vector-effect: non-scaling-stroke; }
-:where(.gd-theme) .gd-chart-target { stroke: #929a9f; stroke-width: 1; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; }
-:where(.gd-theme) .gd-chart-selected { stroke: var(--gd-selected); filter: drop-shadow(0 0 4px rgba(224, 238, 245, .22)); }
+:where(.gd-theme) .gd-chart-target { stroke: var(--gd-chart-target); stroke-width: 1; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; }
+:where(.gd-theme) .gd-chart-selected { stroke: var(--gd-selected); filter: drop-shadow(0 0 4px var(--gd-chart-glow)); }
 
-@media (pointer: coarse) { :where(.gd-theme) :is(.gd-button, button.gd-selectable, .gd-input) { min-height: 44px; } }
-@media (max-width: 600px) { :where(.gd-theme) .gd-panel { padding: 16px; } }
+/* Density changes spacing, not type. Nested comfortable regions can reset it. */
+:where(.gd-theme)[data-density="compact"], :where(.gd-theme) [data-density="compact"] {
+  --gd-panel-padding: 16px;
+  --gd-metric-padding: 12px 16px;
+  --gd-item-padding: 12px;
+  --gd-control-height: 36px;
+  --gd-button-padding: 6px 12px;
+  --gd-input-padding: 7px 12px;
+  --gd-option-height: 36px;
+  --gd-option-padding: 7px 12px;
+  --gd-table-row-height: 40px;
+  --gd-table-cell-padding: 8px 12px;
+}
+:where(.gd-theme)[data-density="comfortable"], :where(.gd-theme) [data-density="comfortable"] {
+  --gd-panel-padding: 24px;
+  --gd-metric-padding: 16px 20px;
+  --gd-item-padding: 16px;
+  --gd-control-height: 42px;
+  --gd-button-padding: 8px 16px;
+  --gd-input-padding: 10px 12px;
+  --gd-option-height: 40px;
+  --gd-option-padding: 10px 12px;
+  --gd-table-row-height: 48px;
+  --gd-table-cell-padding: 12px 16px;
+}
+@media (pointer: coarse) { .gd-theme { --gd-target-min: 44px; } }
+@media (max-width: 600px) { :where(.gd-theme) .gd-panel { padding: min(var(--gd-panel-padding), 16px); } }
 @media (prefers-reduced-motion: reduce) { :where(.gd-theme) .gd-button { transition: none; } }

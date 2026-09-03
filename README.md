@@ -16,6 +16,12 @@ Panels get several levels of dark backgrounds, thin borders, and translucent fil
 
 The layout depends on the task. Use the skill for tables, monitoring, analytics, or flow maps. It does not require you to copy the cover layout.
 
+New dashboards use English by default. You can request another language separately. Existing projects keep their current languages.
+
+Before creating or replacing icons, the agent asks whether you want custom-generated icons or a ready-made SVG set. Both follow the same restrained outline style: thin strokes, rounded ends, simple geometry, and a quiet active-state highlight. Generated images serve as references for small UI icons, with clean SVGs used in the interface.
+
+Shared surface roles cover recessed work areas, regular panels, raised details, and overlays. Comfortable and compact spacing use the same type sizes. The [component gallery](examples/states.html) shows controls and data states you can test locally.
+
 ## Installation
 
 Download the source archive from the [latest release](https://github.com/SLtowl/graphite-dashboard-design/releases/latest) and place its contents in:
@@ -42,9 +48,26 @@ Change the styling, but preserve the structure, data, and behavior.
 
 Other agents may use a different installation path or invocation syntax. They need to support `SKILL.md` and its linked files.
 
+## Reviews and team use
+
+For a review without code changes:
+
+```text
+Use $graphite-dashboard-design to audit this dashboard.
+Check hierarchy, numbers, density, and open controls. Report findings only.
+```
+
+Teams can share one version of the CSS and keep product overrides in a separate stylesheet. Pin an approved release when consistent output matters. Updating the skill does not update existing dashboards. See [team setup and upgrades](references/team-use.md).
+
 ## Automatic updates
 
-Updates are off by default. To opt in, run this command from the installed skill folder:
+Updates are off by default. After installation, ask your agent:
+
+```text
+Enable automatic updates for my installed graphite-dashboard-design skill.
+```
+
+Or run this command from the installed skill folder:
 
 ```sh
 node scripts/update.mjs enable
@@ -53,6 +76,8 @@ node scripts/update.mjs enable
 Node.js 20 or newer is required only for the updater, not for the CSS or demo. When an agent follows the skill's instructions, it runs a local update check at the start of a task. After opt-in, the updater checks the latest stable GitHub release at most once per 24 hours and installs compatible updates. There is no background service, scheduler, or automatic execution when you merely open the demo.
 
 Local edits stop the update. The previous version is backed up. Changes to the updater itself, the managed file list, or the major version require a manual upgrade. Existing dashboards are never updated by this process.
+
+Version 1.2.0 adds package files, so upgrading from 1.1.x requires a reviewed manual installation. Test a separate copy first and preserve local changes. Automatic updates remain optional.
 
 ```sh
 node scripts/update.mjs status
@@ -69,7 +94,9 @@ See [update behavior and recovery](references/updates.md) for details. If your a
 
 Open [examples/index.html](examples/index.html) locally in your browser. The font loads from the package, with no external requests. Click the cards to switch the selected state.
 
-The cover with raised panels is an illustration. The [screenshot](preview.png) shows the actual components.
+Open [examples/states.html](examples/states.html) for menus, validation, dialogs, density, and incomplete-data examples. These are working samples with synthetic data, not connected services.
+
+The cover and the two detail images illustrate the style. The [screenshot](preview.png) shows rendered components.
 
 - [SKILL.md](SKILL.md): style rules and workflow.
 - [assets/graphite.css](assets/graphite.css): tokens and base components.
@@ -91,6 +118,12 @@ You can use the CSS on its own. Copy `assets`, including the fonts folder, link 
 Theme tokens and component styles are scoped to descendants of the container. Component classes use the `gd-` prefix. The font-face declaration is document-wide.
 
 The metric strip wraps within its container. Extremely long values remain available through a scrollable value region; keep it keyboard-focusable as in the example. Use `.gd-input` for labeled form fields. `.gd-glass` enables optional backdrop blur on a panel.
+
+## Checks and browser support
+
+The package includes updater tests, file-integrity checks, and an optional Playwright UI suite. See [test setup and coverage](references/testing.md) for commands and limitations. These are maintainer tools, not requirements for using the CSS.
+
+Native select menus receive full styling where `appearance: base-select` is supported. Elsewhere they keep the system popup. For matching menus across browsers, use an accessible component from your project's stack and test its opened states.
 
 ## Fonts
 

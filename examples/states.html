@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Graphite Dashboard Design | Component states</title>
+  <link rel="stylesheet" href="../assets/graphite.css">
+  <link rel="stylesheet" href="states.css">
+  <script src="states.js" defer></script>
+</head>
+<body>
+  <div class="gd-theme workbench" id="workbench" data-density="comfortable">
+    <main class="gd-shell" id="workbench-shell">
+      <noscript><p>Enable JavaScript to try these local component interactions. The visual samples remain available below.</p></noscript>
+      <header class="workbench-header">
+        <div>
+          <p class="gd-kicker">Graphite Dashboard Design</p>
+          <h1>Component states</h1>
+          <p class="gd-secondary workbench-intro">Open a menu, change a value, try an empty result. Every interaction runs locally with synthetic data.</p>
+        </div>
+        <div class="workbench-actions">
+          <a class="gd-button" href="index.html">Style sample</a>
+          <button class="gd-button" id="density-toggle" type="button" aria-pressed="false">Compact density</button>
+        </div>
+      </header>
+
+      <div class="workbench-interactions">
+        <section class="gd-panel gd-panel--recessed" id="controls-panel" aria-labelledby="controls-title">
+          <div class="workbench-section-heading">
+            <p class="gd-kicker">Controls</p>
+            <h2 class="gd-panel-title" id="controls-title">Save a view</h2>
+            <p class="gd-caption">Native controls, visible validation and an action that stays unavailable until its requirements are met.</p>
+          </div>
+
+          <label class="gd-field" for="workspace-select">Workspace
+            <select class="gd-input" id="workspace-select" aria-describedby="select-support">
+              <option value="all">All workspaces</option>
+              <option value="design">Design</option>
+              <option value="engineering">Engineering</option>
+              <option value="ops">Operations</option>
+              <option value="research">Research</option>
+              <option value="platform">Platform infrastructure and developer experience</option>
+              <option value="international">International customer experience and regional operations</option>
+              <option value="security">Security and reliability</option>
+              <option value="support">Customer support</option>
+              <option value="analytics">Product analytics</option>
+              <option value="content">Content operations</option>
+              <option value="finance">Finance</option>
+              <option value="partnerships">Partnerships</option>
+              <option value="quality">Quality assurance</option>
+              <option value="delivery">Delivery</option>
+              <option value="enablement">Internal enablement</option>
+              <option value="archived" disabled>Archived workspace (unavailable)</option>
+            </select>
+          </label>
+          <p class="gd-caption workbench-note" id="select-support">The native menu remains functional if this browser does not support custom picker styling.</p>
+
+          <form id="report-form" novalidate class="workbench-form">
+            <label class="gd-field" for="report-name">View name
+              <input class="gd-input" id="report-name" name="name" type="text" autocomplete="off" placeholder="Weekly operating review" aria-describedby="report-hint report-error">
+            </label>
+            <p class="gd-caption workbench-note" id="report-hint">Use 3 to 80 characters. Try saving an empty name to inspect the error.</p>
+            <p class="gd-field-error workbench-note" id="report-error" hidden></p>
+            <div class="workbench-actions workbench-form-actions">
+              <button class="gd-button" id="save-report" type="submit">Save view</button>
+              <button class="gd-button" id="publish-report" type="button" disabled>Review saved view</button>
+            </div>
+            <p class="gd-caption workbench-feedback" id="save-status" role="status">Changes live only in this page. Reloading clears them.</p>
+          </form>
+        </section>
+
+        <aside class="gd-panel gd-panel--raised" id="details-panel" aria-labelledby="details-title">
+          <div class="workbench-section-heading">
+            <p class="gd-kicker">Raised inspector</p>
+            <h2 class="gd-panel-title" id="details-title">View details</h2>
+          </div>
+          <dl class="workbench-details">
+            <div><dt>Workspace</dt><dd id="workspace-summary">All workspaces</dd></div>
+            <div><dt>Saved name</dt><dd id="saved-name">Not saved</dd></div>
+            <div><dt>Density</dt><dd id="density-summary">Comfortable</dd></div>
+          </dl>
+          <div class="workbench-inspector-actions">
+            <p class="gd-caption">This surface sits above the working area. An open dialog uses the same material family, with stronger separation.</p>
+            <button class="gd-button workbench-dialog-trigger" id="open-dialog" type="button">Open review dialog</button>
+            <p class="gd-caption" id="dialog-result" role="status"></p>
+          </div>
+        </aside>
+      </div>
+
+      <section class="gd-panel workbench-data" aria-labelledby="data-title">
+        <div class="workbench-data-heading">
+          <div class="workbench-section-heading">
+            <p class="gd-kicker">Data states</p>
+            <h2 class="gd-panel-title" id="data-title">Freshness and access</h2>
+            <p class="gd-caption">Switch the scenario to compare data freshness, partial coverage and access restrictions.</p>
+          </div>
+          <label class="gd-field workbench-scenario" for="data-state">Scenario
+            <select class="gd-input" id="data-state">
+              <option value="current">Current data</option>
+              <option value="stale">Stale data</option>
+              <option value="partial">Partial data</option>
+              <option value="denied">No permission</option>
+              <option value="error">Source error</option>
+            </select>
+          </label>
+        </div>
+        <div id="loading-region" aria-busy="false">
+          <dl class="gd-metrics">
+            <div class="gd-metric"><dt>Processed requests</dt><dd id="state-value" tabindex="0">24,860</dd><small id="state-coverage">3 of 3 sources included</small></div>
+            <div class="gd-metric"><dt>Exact-value stress test</dt><dd id="long-value" tabindex="0">$1,234,567,890,123.45</dd><small>Synthetic value. Scroll the number if it exceeds the available space.</small></div>
+          </dl>
+          <div class="workbench-state-message" role="status" aria-atomic="true">
+            <h3 id="state-title">Current data</h3>
+            <p class="gd-secondary" id="state-detail">All sources are available in this example. Last sample: May 18, 2025 at 10:00 UTC.</p>
+          </div>
+        </div>
+        <div class="workbench-refresh">
+          <div class="workbench-actions">
+            <button class="gd-button" id="reload-data" type="button">Simulate refresh</button>
+            <button class="gd-button" id="retry-data" type="button" hidden>Retry source</button>
+          </div>
+          <p class="gd-caption" id="load-status" role="status">No live connection. Refresh uses a short local delay.</p>
+        </div>
+      </section>
+
+      <section class="gd-panel gd-panel--recessed workbench-records" aria-labelledby="records-title">
+        <div class="workbench-data-heading">
+          <div class="workbench-section-heading">
+            <p class="gd-kicker">Results</p>
+            <h2 class="gd-panel-title" id="records-title">Search results</h2>
+            <p class="gd-caption">Search the sample names. Changing density preserves your filters and saved view.</p>
+          </div>
+          <label class="gd-field workbench-search" for="service-search">Search services
+            <input class="gd-input" id="service-search" type="search" placeholder="Search by name" autocomplete="off" aria-controls="service-rows empty-results">
+          </label>
+        </div>
+        <p class="gd-caption workbench-results-count" id="results-count" role="status">4 services</p>
+        <p class="gd-caption workbench-table-hint" id="table-scroll-hint" hidden>Scroll horizontally to see all columns.</p>
+        <div class="gd-table-wrap" id="service-table-wrap" tabindex="0" role="region" aria-label="Service results">
+          <table class="gd-table workbench-table">
+            <caption>Local sample data. Requests cover May 12-18, 2025.</caption>
+            <thead><tr><th scope="col">Service</th><th scope="col">Status</th><th scope="col" class="gd-number">Requests</th><th scope="col" class="gd-number">p95, ms</th></tr></thead>
+            <tbody id="service-rows">
+              <tr><th scope="row">Core API</th><td>Available</td><td class="gd-number">12,400</td><td class="gd-number">128</td></tr>
+              <tr><th scope="row">Background worker</th><td>Available</td><td class="gd-number">6,200</td><td class="gd-number">96</td></tr>
+              <tr><th scope="row">International workspace synchronization and regional delivery</th><td>Available</td><td class="gd-number">4,860</td><td class="gd-number">142</td></tr>
+              <tr><th scope="row">Audit archive</th><td>Read-only</td><td class="gd-number">1,400</td><td class="gd-number">84</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="empty-results" class="workbench-empty" hidden>
+          <h3>No matching services</h3>
+          <p class="gd-secondary">Try a shorter name or clear the search to return to all four services.</p>
+          <button class="gd-button" id="reset-search" type="button">Clear search</button>
+        </div>
+      </section>
+      <footer class="gd-caption workbench-footer">Component recipes, not a required dashboard layout. Native menus may look different across browsers. No external requests or persistent storage.</footer>
+    </main>
+
+    <dialog class="gd-panel gd-panel--overlay workbench-dialog" id="review-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+      <p class="gd-kicker">Local preview</p>
+      <h2 class="gd-panel-title" id="dialog-title">Review this view</h2>
+      <p class="gd-secondary" id="dialog-description">This dialog demonstrates a modal surface. It does not publish or send anything.</p>
+      <dl class="workbench-details">
+        <div><dt>Workspace</dt><dd id="dialog-workspace">All workspaces</dd></div>
+        <div><dt>Saved name</dt><dd id="dialog-name">Not saved</dd></div>
+      </dl>
+      <p class="gd-caption">Tab stays inside the dialog. Escape closes it and returns focus to the button that opened it.</p>
+      <form method="dialog" class="workbench-actions workbench-dialog-actions">
+        <button class="gd-button" id="close-dialog" value="close" autofocus>Close preview</button>
+      </form>
+    </dialog>
+  </div>
+</body>
+</html>
